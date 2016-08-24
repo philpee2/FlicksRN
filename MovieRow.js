@@ -30,7 +30,11 @@ export default class MovieRow extends Component {
 
     return (
       <View style={styles.container}>
-        <Image style={styles.image} source={{ uri: getPosterUri(movie) }} />
+        <Image
+          style={styles.image}
+          source={{ uri: getPosterUri(movie) }}
+          resizeMode="contain"
+        />
         <View style={styles.textContainer}>
           <Text
             style={[styles.text, styles.title]}
@@ -55,16 +59,16 @@ MovieRow.propTypes = propTypes;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    paddingTop: 10,
+    paddingRight: 10,
   },
   textContainer: {
-    padding: 10,
     flex: 1,
+    justifyContent: 'space-between',
   },
   image: {
     height: 100,
     width: 100,
-    borderWidth: 1,
-    borderColor: 'black',
   },
   title: {
     fontSize: 16,

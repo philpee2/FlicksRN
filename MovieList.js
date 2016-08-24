@@ -11,12 +11,9 @@ import {
   Text,
   ListView,
 } from 'react-native';
-import { NOW_PLAYING, TOP_RATED, API_KEY, BASE_DATA_URL } from './EndpointConstants';
+import { NOW_PLAYING, TOP_RATED } from './EndpointConstants';
 import MovieRow from './MovieRow';
-
-function getUrl(endpoint) {
-  return `${BASE_DATA_URL}/${endpoint}?api_key=${API_KEY}`
-}
+import { fetchMovies } from './Api';
 
 const propTypes = {
   endpoint: PropTypes.oneOf([NOW_PLAYING, TOP_RATED]).isRequired,
@@ -31,24 +28,26 @@ export default class MovieList extends Component {
     this.state = {
       isLoading: true,
       dataSource: ds,
+      error: '',
     };
 
-    this.fetchMovies = this.fetchMovies.bind(this);
+    this.loadMovies = this.loadMovies.bind(this);
   }
 
-  fetchMovies() {
+  loadMovies() {
     this.setState({ isLoading: true });
-    const url = getUrl(this.props.endpoint);
-    fetch(url).then(movies => movies.json()).then(moviesJson => {
+    fetchMovies(this.props.endpoint).then(movies => {
       this.setState({
         isLoading: false,
-        dataSource: this.state.dataSource.cloneWithRows(moviesJson.results),
+        dataSource: this.state.dataSource.cloneWithRows(movies),
       });
+    }).catch(error => {
+      this.setState({ isLoading: false, error });
     });
   }
 
   componentDidMount() {
-    this.fetchMovies();
+    this.loadMovies();
   }
 
   render() {
