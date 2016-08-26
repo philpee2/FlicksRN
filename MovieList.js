@@ -39,9 +39,9 @@ export default class MovieList extends Component {
     this.loadMovies = this.loadMovies.bind(this);
   }
 
-  loadMovies() {
+  loadMovies(endpoint = this.props.endpoint) {
     this.setState({ isLoading: true });
-    fetchMovies(this.props.endpoint).then(movies => {
+    fetchMovies(endpoint).then(movies => {
       this.setState({
         isLoading: false,
         dataSource: this.state.dataSource.cloneWithRows(movies),
@@ -53,6 +53,12 @@ export default class MovieList extends Component {
 
   componentDidMount() {
     this.loadMovies();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.endpoint !== this.props.endpoint) {
+      this.loadMovies(nextProps.endpoint);
+    }
   }
 
   render() {

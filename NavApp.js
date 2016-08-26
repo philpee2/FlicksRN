@@ -13,11 +13,12 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import { NOW_PLAYING } from './EndpointConstants';
+import { NOW_PLAYING, TOP_RATED } from './EndpointConstants';
 import MovieList from './MovieList';
 import MovieDetail from './MovieDetail';
 
 const propTypes = {
+  endpoint: PropTypes.oneOf([NOW_PLAYING, TOP_RATED]).isRequired,
 }
 
 const routes = [
@@ -67,6 +68,7 @@ export default class NavApp extends Component {
   navBackAndroid = null
 
   render() {
+    const { endpoint } = this.props;
     return (
       <Navigator
         initialRoute={routes[0]}
@@ -77,7 +79,7 @@ export default class NavApp extends Component {
           } else if (route.name === 'movies') {
             return (
               <MovieList
-                endpoint={NOW_PLAYING}
+                endpoint={endpoint}
                 onMoviePress={(movie) => navigator.push({
                   ...routes[1],
                   title: movie.title,

@@ -8,6 +8,6 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
 } from 'react-native';
-import NavApp from './NavApp';
+import TabBar from './TabBar';
 
-AppRegistry.registerComponent('FlicksRN', () => NavApp);
+AppRegistry.registerComponent('FlicksRN', () => TabBar);
