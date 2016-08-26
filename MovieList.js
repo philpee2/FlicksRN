@@ -10,6 +10,7 @@ import {
   StyleSheet,
   Text,
   ListView,
+  RefreshControl,
 } from 'react-native';
 import { NOW_PLAYING, TOP_RATED } from './EndpointConstants';
 import MovieRow from './MovieRow';
@@ -32,6 +33,7 @@ export default class MovieList extends Component {
     });
     this.state = {
       isLoading: true,
+      isRefreshing: false,
       dataSource: ds,
       error: '',
     };
@@ -39,11 +41,12 @@ export default class MovieList extends Component {
     this.loadMovies = this.loadMovies.bind(this);
   }
 
-  loadMovies(endpoint = this.props.endpoint) {
-    this.setState({ isLoading: true });
+  loadMovies({ endpoint = this.props.endpoint, fromRefresh = false } = {}) {
+    this.setState({ isLoading: !fromRefresh, isRefreshing: fromRefresh });
     fetchMovies(endpoint).then(movies => {
       this.setState({
         isLoading: false,
+        isRefreshing: false,
         dataSource: this.state.dataSource.cloneWithRows(movies),
       });
     }).catch(error => {
@@ -57,12 +60,12 @@ export default class MovieList extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.endpoint !== this.props.endpoint) {
-      this.loadMovies(nextProps.endpoint);
+      this.loadMovies({ endpoint: nextProps.endpoint });
     }
   }
 
   render() {
-    const { dataSource, isLoading } = this.state;
+    const { dataSource, isLoading, isRefreshing } = this.state;
     const { onMoviePress } = this.props;
     if (isLoading) {
       return <Text style={styles.loading}>Loading...</Text>
@@ -74,6 +77,12 @@ export default class MovieList extends Component {
           renderRow={movie => (
             <MovieRow movie={movie} onPress={() => onMoviePress(movie)} />
           )}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={() => this.loadMovies({ fromRefresh: true })}
+            />
+          }
         />
       );
     }
@@ -85,7 +94,7 @@ MovieList.defaultProps = defaultProps;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 75,
   },
   loading: {
     marginTop: 70,
