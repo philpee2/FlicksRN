@@ -15,12 +15,20 @@ import MovieShape from './MovieShape';
 import { getImageUri } from './Api';
 import Rating from './Rating';
 import { getYear } from './getYear';
+import BackdropImage from './BackdropImage';
 
 const propTypes = {
   movie: MovieShape,
 };
 
 export default class MovieDetail extends Component {
+
+  state = { width: 0, height: 0 }
+
+  onLayout = ({ nativeEvent }) => {
+    const { width, height } = nativeEvent.layout;
+    this.setState({ width, height });
+  }
 
   render() {
     const {
@@ -35,12 +43,14 @@ export default class MovieDetail extends Component {
       }
     } = this.props;
 
+    const { width, height } = this.state;
+    const isLandscape = width > height;
     return (
-      <View style={styles.container}>
-        <Image
-          style={styles.backdrop}
-          source={{ uri: getImageUri(backdrop_path || poster_path) }}
-          resizeMode="cover"
+      <View style={[styles.container, isLandscape && styles.row]} onLayout={this.onLayout}>
+        <BackdropImage
+          deviceWidth={width}
+          deviceHeight={height}
+          source={getImageUri(backdrop_path || poster_path)}
         />
 
         <View style={styles.detailsContainer}>
@@ -61,9 +71,10 @@ const styles = StyleSheet.create({
     marginTop: 63,
     flex: 1,
   },
-  backdrop: {
-    height: 200,
-    alignSelf: 'stretch',
+  row: {
+    flexDirection: 'row',
+    flex: 1,
+    // justifyContent: 'space-around',
   },
   title: {
     fontWeight: 'bold',
