@@ -16,8 +16,13 @@ import MovieRow from './MovieRow';
 import { fetchMovies } from './Api';
 
 const propTypes = {
-  endpoint: PropTypes.oneOf([NOW_PLAYING, TOP_RATED]).isRequired,
-}
+  endpoint: PropTypes.oneOf([NOW_PLAYING, TOP_RATED]),
+  onMoviePress: PropTypes.func.isRequired,
+};
+
+const defaultProps = {
+  endpoint: NOW_PLAYING,
+};
 
 export default class MovieList extends Component {
   constructor(props) {
@@ -52,6 +57,7 @@ export default class MovieList extends Component {
 
   render() {
     const { dataSource, isLoading } = this.state;
+    const { onMoviePress } = this.props;
     if (isLoading) {
       return <Text style={styles.loading}>Loading...</Text>
     } else {
@@ -59,7 +65,9 @@ export default class MovieList extends Component {
         <ListView
           style={styles.container}
           dataSource={dataSource}
-          renderRow={movie => <MovieRow movie={movie} />}
+          renderRow={movie => (
+            <MovieRow movie={movie} onPress={() => onMoviePress(movie)} />
+          )}
         />
       );
     }
@@ -67,12 +75,13 @@ export default class MovieList extends Component {
 }
 
 MovieList.propTypes = propTypes;
+MovieList.defaultProps = defaultProps;
 
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
   },
   loading: {
-    marginTop: 20,
+    marginTop: 70,
   }
 });

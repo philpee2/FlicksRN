@@ -7,22 +7,7 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
-  StyleSheet,
-  Text,
-  View
 } from 'react-native';
-import MovieList from './MovieList';
-import { NOW_PLAYING } from './EndpointConstants';
+import NavApp from './NavApp';
 
-class FlicksRN extends Component {
-  render() {
-    return (
-      <MovieList endpoint={NOW_PLAYING} />
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-});
-
-AppRegistry.registerComponent('FlicksRN', () => FlicksRN);
+AppRegistry.registerComponent('FlicksRN', () => NavApp);

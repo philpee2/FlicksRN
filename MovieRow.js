@@ -11,12 +11,14 @@ import {
   Text,
   View,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import MovieShape from './MovieShape';
 import { BASE_IMAGE_URL } from './EndpointConstants';
 
 const propTypes = {
   movie: MovieShape.isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
 function getPosterUri(movie) {
@@ -26,30 +28,31 @@ function getPosterUri(movie) {
 export default class MovieRow extends Component {
 
   render() {
-    const { movie } = this.props;
-
+    const { movie, onPress } = this.props;
     return (
-      <View style={styles.container}>
-        <Image
-          style={styles.image}
-          source={{ uri: getPosterUri(movie) }}
-          resizeMode="contain"
-        />
-        <View style={styles.textContainer}>
-          <Text
-            style={[styles.text, styles.title]}
-            numberOfLines={1}
-          >
-            {movie.title}
-          </Text>
-          <Text
-            style={[styles.text, styles.overview]}
-            numberOfLines={3}
-          >
-            {movie.overview}
-          </Text>
+      <TouchableOpacity onPress={onPress}>
+        <View style={styles.container}>
+          <Image
+            style={styles.image}
+            source={{ uri: getPosterUri(movie) }}
+            resizeMode="contain"
+          />
+          <View style={styles.textContainer}>
+            <Text
+              style={[styles.text, styles.title]}
+              numberOfLines={1}
+            >
+              {movie.title}
+            </Text>
+            <Text
+              style={[styles.text, styles.overview]}
+              numberOfLines={3}
+            >
+              {movie.overview}
+            </Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
