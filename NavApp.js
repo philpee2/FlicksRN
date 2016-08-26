@@ -31,7 +31,7 @@ const routeMapper = {
     if (navigator.getCurrentRoutes().length > 1) {
       return (
         <TouchableOpacity onPress={() => navigator.pop()}>
-          <Text>Back</Text>
+          <Text style={[styles.navText, styles.leftNavText]}>Back</Text>
         </TouchableOpacity>
       );
     } else {
@@ -39,7 +39,7 @@ const routeMapper = {
     }
   },
   RightButton: () => null,
-  Title: (route) => <Text>{route.title}</Text>,
+  Title: (route) => <Text style={styles.navText}>{route.title}</Text>,
 };
 
 export default class NavApp extends Component {
@@ -101,6 +101,14 @@ NavApp.propTypes = propTypes;
 
 const styles = StyleSheet.create({
   navBar: {
-    backgroundColor: 'purple',
+    backgroundColor: '#00A699',
+  },
+  navText: {
+    color: 'white',
+    fontSize: 16,
+    marginTop: 10,
+  },
+  leftNavText: {
+    marginLeft: 15,
   }
 });

@@ -10,11 +10,13 @@ import {
   StyleSheet,
   Text,
   ListView,
+  View,
   RefreshControl,
 } from 'react-native';
 import { NOW_PLAYING, TOP_RATED } from './EndpointConstants';
 import MovieRow from './MovieRow';
 import { fetchMovies } from './Api';
+import ErrorMessage from './ErrorMessage';
 
 const propTypes = {
   endpoint: PropTypes.oneOf([NOW_PLAYING, TOP_RATED]),
@@ -35,7 +37,7 @@ export default class MovieList extends Component {
       isLoading: true,
       isRefreshing: false,
       dataSource: ds,
-      error: '',
+      hasError: false,
     };
 
     this.loadMovies = this.loadMovies.bind(this);
@@ -47,10 +49,11 @@ export default class MovieList extends Component {
       this.setState({
         isLoading: false,
         isRefreshing: false,
+        hasError: false,
         dataSource: this.state.dataSource.cloneWithRows(movies),
       });
     }).catch(error => {
-      this.setState({ isLoading: false, error });
+      this.setState({ isLoading: false, hasError: true });
     });
   }
 
@@ -65,25 +68,27 @@ export default class MovieList extends Component {
   }
 
   render() {
-    const { dataSource, isLoading, isRefreshing } = this.state;
+    const { dataSource, isLoading, isRefreshing, hasError } = this.state;
     const { onMoviePress } = this.props;
     if (isLoading) {
       return <Text style={styles.loading}>Loading...</Text>
     } else {
       return (
-        <ListView
-          style={styles.container}
-          dataSource={dataSource}
-          renderRow={movie => (
-            <MovieRow movie={movie} onPress={() => onMoviePress(movie)} />
-          )}
-          refreshControl={
-            <RefreshControl
-              refreshing={isRefreshing}
-              onRefresh={() => this.loadMovies({ fromRefresh: true })}
-            />
-          }
-        />
+        <View style={styles.container}>
+          {hasError && <ErrorMessage />}
+          <ListView
+            dataSource={dataSource}
+            renderRow={movie => (
+              <MovieRow movie={movie} onPress={() => onMoviePress(movie)} />
+            )}
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefreshing}
+                onRefresh={() => this.loadMovies({ fromRefresh: true })}
+              />
+            }
+          />
+        </View>
       );
     }
   }
@@ -94,7 +99,7 @@ MovieList.defaultProps = defaultProps;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 75,
+    marginTop: 63,
   },
   loading: {
     marginTop: 70,
