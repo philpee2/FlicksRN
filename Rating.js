@@ -17,7 +17,7 @@ function getStyle(rating) {
   if (rating > 7.5) {
     return 'green';
   } else if (rating > 5.0) {
-    return '#E1D82EFF';
+    return '#C9C32AFF';
   } else {
     return 'red';
   }

@@ -57,7 +57,7 @@ export default class MovieDetail extends Component {
           <Text style={styles.title}>{title}</Text>
           <Text>{getYear(release_date)}</Text>
           <Rating rating={vote_average} />
-          <Text>{overview}</Text>
+          <Text numberOfLines={9}>{overview}</Text>
         </View>
       </View>
     );
@@ -70,11 +70,11 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 63,
     flex: 1,
+    backgroundColor: '#DFE5E9FF',
   },
   row: {
     flexDirection: 'row',
     flex: 1,
-    // justifyContent: 'space-around',
   },
   title: {
     fontWeight: 'bold',
@@ -83,6 +83,6 @@ const styles = StyleSheet.create({
   detailsContainer: {
     margin: 10,
     flex: 1,
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   }
 });

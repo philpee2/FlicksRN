@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 63,
     flex: 1,
+    backgroundColor: '#DFE5E9FF',
   },
   loading: {
     marginTop: 70,
