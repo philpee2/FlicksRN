@@ -52,8 +52,10 @@ export default class MovieRow extends Component {
             >
               {title}
             </Text>
-            <Text style={styles.text}>{getYear(release_date)}</Text>
-            <Rating rating={vote_average} />
+            <View style={styles.dateAndRating}>
+              <Text style={[styles.text, styles.releaseDate]}>{getYear(release_date)}</Text>
+              <Rating rating={vote_average} />
+            </View>
             <Text
               style={[styles.text, styles.overview]}
               numberOfLines={3}
@@ -93,4 +95,10 @@ const styles = StyleSheet.create({
   text: {
     color: 'rgb(57, 57, 57)',
   },
+  dateAndRating: {
+    flexDirection: 'row',
+  },
+  releaseDate: {
+    marginRight: 5,
+  }
 });
