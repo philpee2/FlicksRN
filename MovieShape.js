@@ -2,7 +2,7 @@ import { PropTypes } from 'react';
 
 export default PropTypes.shape({
   adult: PropTypes.bool.isRequired,
-  backdrop_path: PropTypes.string.isRequired,
+  backdrop_path: PropTypes.string,
   genre_ids: PropTypes.arrayOf(PropTypes.number).isRequired,
   id: PropTypes.number.isRequired,
   original_language: PropTypes.string.isRequired,

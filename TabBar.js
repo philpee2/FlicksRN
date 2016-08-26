@@ -31,7 +31,11 @@ export default class TabBar extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.scene}>
-          <NavApp endpoint={tabIndex === 0 ? NOW_PLAYING : TOP_RATED} />
+          {
+            tabIndex === 0
+              ? <NavApp endpoint={NOW_PLAYING} />
+              : <NavApp endpoint={TOP_RATED} />
+          }
         </View>
         <View style={styles.tabBar}>
           <TouchableOpacity onPress={() => this.selectTab(0)}>

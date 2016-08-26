@@ -30,6 +30,7 @@ export default class MovieDetail extends Component {
     const {
       movie: {
         backdrop_path,
+        poster_path,
         overview,
         release_date,
         title,
@@ -42,15 +43,16 @@ export default class MovieDetail extends Component {
       <View style={styles.container}>
         <Image
           style={styles.backdrop}
-          source={{ uri: getImageUri(backdrop_path) }}
+          source={{ uri: getImageUri(backdrop_path || poster_path) }}
           resizeMode="cover"
         />
 
-        <Text>{title}</Text>
-        <Text>{getYear(release_date)}</Text>
-        <Rating rating={vote_average} />
-        <Text>{overview}</Text>
-
+        <View style={styles.detailsContainer}>
+          <Text style={styles.title}>{title}</Text>
+          <Text>{getYear(release_date)}</Text>
+          <Rating rating={vote_average} />
+          <Text>{overview}</Text>
+        </View>
       </View>
     );
   }
@@ -61,9 +63,19 @@ MovieDetail.propTypes = propTypes;
 const styles = StyleSheet.create({
   container: {
     marginTop: 63,
+    flex: 1,
   },
   backdrop: {
     height: 200,
     alignSelf: 'stretch',
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  detailsContainer: {
+    margin: 10,
+    flex: 1,
+    justifyContent: 'space-around'
   }
 });
