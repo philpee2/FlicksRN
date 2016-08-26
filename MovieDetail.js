@@ -14,6 +14,7 @@ import {
 import MovieShape from './MovieShape';
 import { getImageUri } from './Api';
 import moment from 'moment';
+import Rating from './Rating';
 
 const propTypes = {
   movie: MovieShape,
@@ -47,7 +48,7 @@ export default class MovieDetail extends Component {
 
         <Text>{title}</Text>
         <Text>{getYear(release_date)}</Text>
-        <Text>{vote_average}</Text>
+        <Rating rating={vote_average} />
         <Text>{overview}</Text>
 
       </View>
