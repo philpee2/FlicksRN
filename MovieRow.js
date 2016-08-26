@@ -15,15 +15,12 @@ import {
 } from 'react-native';
 import MovieShape from './MovieShape';
 import { BASE_IMAGE_URL } from './EndpointConstants';
+import { getImageUri } from './Api';
 
 const propTypes = {
   movie: MovieShape.isRequired,
   onPress: PropTypes.func.isRequired,
 };
-
-function getPosterUri(movie) {
-  return `${BASE_IMAGE_URL}/${movie.poster_path}`;
-}
 
 export default class MovieRow extends Component {
 
@@ -34,7 +31,7 @@ export default class MovieRow extends Component {
         <View style={styles.container}>
           <Image
             style={styles.image}
-            source={{ uri: getPosterUri(movie) }}
+            source={{ uri: getImageUri(movie.poster_path) }}
             resizeMode="contain"
           />
           <View style={styles.textContainer}>
