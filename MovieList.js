@@ -100,6 +100,7 @@ MovieList.defaultProps = defaultProps;
 const styles = StyleSheet.create({
   container: {
     marginTop: 63,
+    flex: 1,
   },
   loading: {
     marginTop: 70,
