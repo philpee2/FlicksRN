@@ -16,6 +16,8 @@ import {
 import MovieShape from './MovieShape';
 import { BASE_IMAGE_URL } from './EndpointConstants';
 import { getImageUri } from './Api';
+import { getYear } from './getYear';
+import Rating from './Rating';
 
 const propTypes = {
   movie: MovieShape.isRequired,
@@ -25,13 +27,22 @@ const propTypes = {
 export default class MovieRow extends Component {
 
   render() {
-    const { movie, onPress } = this.props;
+    const {
+      movie: {
+        poster_path,
+        overview,
+        release_date,
+        title,
+        vote_average,
+      },
+      onPress
+    } = this.props;
     return (
       <TouchableOpacity onPress={onPress}>
         <View style={styles.container}>
           <Image
             style={styles.image}
-            source={{ uri: getImageUri(movie.poster_path) }}
+            source={{ uri: getImageUri(poster_path) }}
             resizeMode="contain"
           />
           <View style={styles.textContainer}>
@@ -39,13 +50,15 @@ export default class MovieRow extends Component {
               style={[styles.text, styles.title]}
               numberOfLines={1}
             >
-              {movie.title}
+              {title}
             </Text>
+            <Text style={styles.text}>{getYear(release_date)}</Text>
+            <Rating rating={vote_average} />
             <Text
               style={[styles.text, styles.overview]}
               numberOfLines={3}
             >
-              {movie.overview}
+              {overview}
             </Text>
           </View>
         </View>

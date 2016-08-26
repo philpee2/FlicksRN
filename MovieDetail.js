@@ -13,16 +13,12 @@ import {
 } from 'react-native';
 import MovieShape from './MovieShape';
 import { getImageUri } from './Api';
-import moment from 'moment';
 import Rating from './Rating';
+import { getYear } from './getYear';
 
 const propTypes = {
   movie: MovieShape,
 };
-
-function getYear(date) {
-  return moment(date, 'YYYY-MM-DDD').year();
-}
 
 export default class MovieDetail extends Component {
 

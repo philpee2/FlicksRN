@@ -26,9 +26,13 @@ function getStyle(rating) {
 export default class Rating extends Component {
   render() {
     const { rating } = this.props;
-    return (
-      <Text style={{ color: getStyle(rating), fontWeight: 'bold' }}>{rating}</Text>
-    );
+    if (rating === 0) {
+      return <Text>No ratings</Text>
+    } else {
+      return (
+        <Text style={{ color: getStyle(rating), fontWeight: 'bold' }}>{rating}</Text>
+      );
+    }
   }
 }
 
