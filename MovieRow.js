@@ -6,7 +6,6 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
@@ -14,15 +13,46 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import MovieShape from './MovieShape';
-import { BASE_IMAGE_URL } from './EndpointConstants';
 import { getImageUri } from './Api';
-import { getYear } from './getYear';
+import getYear from './getYear';
 import Rating from './Rating';
 
 const propTypes = {
   movie: MovieShape.isRequired,
   onPress: PropTypes.func.isRequired,
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    paddingTop: 10,
+    paddingRight: 10,
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  image: {
+    height: 100,
+    width: 100,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  overview: {
+    fontSize: 12,
+  },
+  text: {
+    color: 'rgb(57, 57, 57)',
+  },
+  dateAndRating: {
+    flexDirection: 'row',
+  },
+  releaseDate: {
+    marginRight: 5,
+  },
+});
 
 export default class MovieRow extends Component {
 
@@ -35,7 +65,7 @@ export default class MovieRow extends Component {
         title,
         vote_average,
       },
-      onPress
+      onPress,
     } = this.props;
     return (
       <TouchableOpacity onPress={onPress}>
@@ -70,35 +100,3 @@ export default class MovieRow extends Component {
 }
 
 MovieRow.propTypes = propTypes;
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    paddingTop: 10,
-    paddingRight: 10,
-  },
-  textContainer: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  image: {
-    height: 100,
-    width: 100,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  overview: {
-    fontSize: 12,
-  },
-  text: {
-    color: 'rgb(57, 57, 57)',
-  },
-  dateAndRating: {
-    flexDirection: 'row',
-  },
-  releaseDate: {
-    marginRight: 5,
-  }
-});

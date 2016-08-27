@@ -13,17 +13,6 @@ const defaultProps = {
   message: 'Network Error',
 };
 
-export default function ErrorMessage({ message }) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>{message}</Text>
-    </View>
-  );
-}
-
-ErrorMessage.propTypes = propTypes;
-ErrorMessage.defaultProps = defaultProps;
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#4B454BFF',
@@ -35,3 +24,15 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+
+
+export default function ErrorMessage({ message }) {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>{message}</Text>
+    </View>
+  );
+}
+
+ErrorMessage.propTypes = propTypes;
+ErrorMessage.defaultProps = defaultProps;

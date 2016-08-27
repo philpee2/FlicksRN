@@ -1,7 +1,7 @@
 import { API_KEY, BASE_DATA_URL, BASE_IMAGE_URL } from './EndpointConstants';
 
 function getUrl(endpoint) {
-  return `${BASE_DATA_URL}/${endpoint}?api_key=${API_KEY}`
+  return `${BASE_DATA_URL}/${endpoint}?api_key=${API_KEY}`;
 }
 
 export function fetchMovies(endpoint) {

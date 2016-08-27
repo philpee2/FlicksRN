@@ -1,13 +1,19 @@
 import React from 'react';
 import {
   View,
-  Text,
-  TouchableOpacity,
   TabBarIOS,
   StyleSheet,
 } from 'react-native';
 import NavApp from './NavApp';
 import { NOW_PLAYING, TOP_RATED } from './EndpointConstants';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    // Roughly the height of the tab bar
+    marginBottom: 50,
+  },
+});
 
 function tabStyle(selectedTabIndex, tabIndex) {
   if (selectedTabIndex === tabIndex) {
@@ -54,11 +60,3 @@ export default class TabBar extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // Roughly the height of the tab bar
-    marginBottom: 50,
-  }
-});

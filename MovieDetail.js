@@ -4,22 +4,42 @@
  * @flow
  */
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  Image,
 } from 'react-native';
 import MovieShape from './MovieShape';
 import { getImageUri } from './Api';
 import Rating from './Rating';
-import { getYear } from './getYear';
+import getYear from './getYear';
 import BackdropImage from './BackdropImage';
 
 const propTypes = {
   movie: MovieShape,
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 63,
+    flex: 1,
+    backgroundColor: '#DFE5E9FF',
+  },
+  row: {
+    flexDirection: 'row',
+    flex: 1,
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  detailsContainer: {
+    margin: 10,
+    flex: 1,
+    justifyContent: 'space-around',
+  },
+});
 
 export default class MovieDetail extends Component {
 
@@ -38,7 +58,6 @@ export default class MovieDetail extends Component {
         overview,
         release_date,
         title,
-        video,
         vote_average,
       }
     } = this.props;
@@ -65,24 +84,3 @@ export default class MovieDetail extends Component {
 }
 
 MovieDetail.propTypes = propTypes;
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 63,
-    flex: 1,
-    backgroundColor: '#DFE5E9FF',
-  },
-  row: {
-    flexDirection: 'row',
-    flex: 1,
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  detailsContainer: {
-    margin: 10,
-    flex: 1,
-    justifyContent: 'space-around',
-  }
-});

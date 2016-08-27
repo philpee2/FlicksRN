@@ -28,6 +28,32 @@ const routes = [
   { name: 'movieDetail' },
 ];
 
+const styles = StyleSheet.create({
+  navBar: {
+    backgroundColor: '#00A699',
+  },
+  navText: {
+    color: 'white',
+    fontSize: 16,
+    marginTop: 10,
+  },
+  leftNavText: {
+    marginLeft: 15,
+  },
+  searchBar: {
+    backgroundColor: '#00A699',
+  },
+  searchInput: {
+    height: 30,
+    width: 200,
+    margin: 5,
+    paddingLeft: 10,
+    backgroundColor: 'white',
+    borderRadius: 5,
+  },
+});
+
+
 export default class NavApp extends Component {
 
   state = { searchText: '' }
@@ -93,9 +119,8 @@ export default class NavApp extends Component {
                       <Text style={[styles.navText, styles.leftNavText]}>Back</Text>
                     </TouchableOpacity>
                   );
-                } else {
-                  return null;
                 }
+                return null;
               },
               RightButton: () => null,
               Title: (route) => (
@@ -121,28 +146,3 @@ export default class NavApp extends Component {
 }
 
 NavApp.propTypes = propTypes;
-
-const styles = StyleSheet.create({
-  navBar: {
-    backgroundColor: '#00A699',
-  },
-  navText: {
-    color: 'white',
-    fontSize: 16,
-    marginTop: 10,
-  },
-  leftNavText: {
-    marginLeft: 15,
-  },
-  searchBar: {
-    backgroundColor: '#00A699',
-  },
-  searchInput: {
-    height: 30,
-    width: 200,
-    margin: 5,
-    paddingLeft: 10,
-    backgroundColor: 'white',
-    borderRadius: 5,
-  },
-});
