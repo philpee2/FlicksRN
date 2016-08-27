@@ -12,6 +12,8 @@ import {
   Platform,
   Text,
   TouchableOpacity,
+  View,
+  TextInput,
 } from 'react-native';
 import { NOW_PLAYING, TOP_RATED } from './EndpointConstants';
 import MovieList from './MovieList';
@@ -26,23 +28,9 @@ const routes = [
   { name: 'movieDetail' },
 ];
 
-const routeMapper = {
-  LeftButton: (route, navigator) => {
-    if (navigator.getCurrentRoutes().length > 1) {
-      return (
-        <TouchableOpacity onPress={() => navigator.pop()}>
-          <Text style={[styles.navText, styles.leftNavText]}>Back</Text>
-        </TouchableOpacity>
-      );
-    } else {
-      return null;
-    }
-  },
-  RightButton: () => null,
-  Title: (route) => <Text style={styles.navText}>{route.title}</Text>,
-};
-
 export default class NavApp extends Component {
+
+  state = { searchText: '' }
 
   componentDidMount() {
     if (Platform.OS === 'android') {
@@ -65,10 +53,15 @@ export default class NavApp extends Component {
     }
   }
 
+  onSearchChange = (searchText) =>  {
+    this.setState({ searchText });
+  }
+
   navBackAndroid = null
 
   render() {
     const { endpoint } = this.props;
+    const { searchText } = this.state;
     return (
       <Navigator
         initialRoute={routes[0]}
@@ -80,6 +73,7 @@ export default class NavApp extends Component {
             return (
               <MovieList
                 endpoint={endpoint}
+                searchText={searchText}
                 onMoviePress={(movie) => navigator.push({
                   ...routes[1],
                   title: movie.title,
@@ -90,7 +84,36 @@ export default class NavApp extends Component {
           }
         }}
         navigationBar={
-          <Navigator.NavigationBar routeMapper={routeMapper} style={styles.navBar} />
+          <Navigator.NavigationBar
+            routeMapper={{
+              LeftButton: (route, navigator) => {
+                if (navigator.getCurrentRoutes().length > 1) {
+                  return (
+                    <TouchableOpacity onPress={() => navigator.pop()}>
+                      <Text style={[styles.navText, styles.leftNavText]}>Back</Text>
+                    </TouchableOpacity>
+                  );
+                } else {
+                  return null;
+                }
+              },
+              RightButton: () => null,
+              Title: (route) => (
+                route.name === 'movies' ? (
+                  <View style={styles.searchBar}>
+                    <TextInput
+                      style={styles.searchInput}
+                      placeholder="Search"
+                      onChangeText={this.onSearchChange}
+                    />
+                  </View>
+                ) : (
+                  <Text style={styles.navText}>{route.title}</Text>
+                )
+              ),
+            }}
+            style={styles.navBar}
+          />
         }
       />
     );
@@ -110,5 +133,16 @@ const styles = StyleSheet.create({
   },
   leftNavText: {
     marginLeft: 15,
-  }
+  },
+  searchBar: {
+    backgroundColor: '#00A699',
+  },
+  searchInput: {
+    height: 30,
+    width: 200,
+    margin: 5,
+    paddingLeft: 10,
+    backgroundColor: 'white',
+    borderRadius: 5,
+  },
 });

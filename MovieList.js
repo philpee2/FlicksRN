@@ -21,6 +21,7 @@ import ErrorMessage from './ErrorMessage';
 const propTypes = {
   endpoint: PropTypes.oneOf([NOW_PLAYING, TOP_RATED]),
   onMoviePress: PropTypes.func.isRequired,
+  searchText: PropTypes.string.isRequired,
 };
 
 const defaultProps = {
@@ -38,6 +39,7 @@ export default class MovieList extends Component {
       isRefreshing: false,
       dataSource: ds,
       hasError: false,
+      movies: [],
     };
 
     this.loadMovies = this.loadMovies.bind(this);
@@ -50,9 +52,10 @@ export default class MovieList extends Component {
         isLoading: false,
         isRefreshing: false,
         hasError: false,
-        dataSource: this.state.dataSource.cloneWithRows(movies),
+        movies,
       });
     }).catch(error => {
+      console.log(error)
       this.setState({ isLoading: false, hasError: true });
     });
   }
@@ -67,6 +70,12 @@ export default class MovieList extends Component {
     }
   }
 
+  filteredMovies = () => {
+    const { searchText } = this.props;
+    const { movies } = this.state;
+    return movies.filter(movie => movie.title.includes(searchText));
+  }
+
   render() {
     const { dataSource, isLoading, isRefreshing, hasError } = this.state;
     const { onMoviePress } = this.props;
@@ -76,8 +85,10 @@ export default class MovieList extends Component {
       return (
         <View style={styles.container}>
           {hasError && <ErrorMessage />}
+          {/* Added cloneWithRows here to make things more declarative. This probably has perf
+          issues? Might be good to optimize with shouldComponentUpdate */}
           <ListView
-            dataSource={dataSource}
+            dataSource={dataSource.cloneWithRows(this.filteredMovies())}
             renderRow={movie => (
               <MovieRow movie={movie} onPress={() => onMoviePress(movie)} />
             )}
